@@ -1,40 +1,24 @@
 <head>
-  <script type="text/javascript" src="http://cdn.clappr.io/latest/clappr.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="./clappr.js"></script>
   <script type="text/javascript" src="../dist/clappr-markers-plugin.js"></script>
 </head>
 <body>
   <div id="player"></div>
   <script>
 
-    var markerInfo = [
-      [0, "Incredible Arial Shots"],
-      [13, "Good Morning Lancaster"],
-      [25, "SugarTV"],
-      [37, "The LA1 Show"],
-      [56, "Soundbooth"],
-      [75, "Jailbreak"],
-      [87, "Charity Showcase"],
-      [96, "Strictly Cha Cha Chat!"],
-      [102, "Roses"],
-      [116, "The Studio!"],
-      [167, "Closing Sequence"]
-    ];
-
-    var markers = [];
-
-    for(var i=0; i<markerInfo.length; i++) {
-      var info = markerInfo[i];
-      markers.push(new ClapprMarkersPlugin.StandardMarker(info[0], info[1]));
-    }
-
-    var player = new Clappr.Player({
+   var player = new Clappr.Player({
     	source: "http://tjenkinson.me/clappr-thumbnails-plugin/assets/video.mp4",
     	parentId: "#player",
     	plugins: {
         core: [ClapprMarkersPlugin],
       },
       markersPlugin: {
-        markers: markers
+        markers: [
+          new ClapprMarkersPlugin.CropMarker(10,10),
+          new ClapprMarkersPlugin.CropMarker(80,10)
+        ]
       }
     });
 

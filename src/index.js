@@ -2,6 +2,7 @@ import {UICorePlugin, Events, $} from 'clappr'
 import './style.sass'
 import Marker from "./marker"
 import StandardMarker from "./standard-marker"
+import CropMarker from "./crop-marker"
 import ImageMarker from "./image-marker"
 
 export default class MarkersPlugin extends UICorePlugin {
@@ -12,6 +13,10 @@ export default class MarkersPlugin extends UICorePlugin {
 
   static get StandardMarker() {
     return StandardMarker
+  }
+
+  static get CropMarker() {
+    return CropMarker
   }
 
   static get ImageMarker() {
@@ -152,6 +157,7 @@ export default class MarkersPlugin extends UICorePlugin {
       tooltipContainerBottom: null,
       tooltipChangedHandler: null,
       time: marker.getTime(),
+	    duration: marker.getDuration ? marker.getDuration() : undefined,
       timeChangedHandler: null,
       onDestroy: marker.onDestroy
     }
@@ -271,11 +277,21 @@ export default class MarkersPlugin extends UICorePlugin {
       return
     }
     this._markers.forEach((marker) => {
+      console.log("Time:"+marker.time+", duration:"+marker.duration)
       let $el = marker.$marker
       let percentage = Math.min(Math.max((marker.time/this._duration)*100, 0), 100)
       if (marker.markerLeft !== percentage) {
         $el.css("left", percentage+"%")
-        marker.markerLeft = percentage
+        console.log("Left:"+percentage+"%")
+	    marker.markerLeft = percentage
+      }
+      if (marker.duration) {
+	      let percentageWidth = Math.min(Math.max((marker.duration/this._duration)*100, 0), 100 - percentage)
+	      if (marker.markerWidth !== percentageWidth) {
+		      $el.css({"left": percentage+"%", "width":percentageWidth+"%"})
+              console.log("Width:"+percentageWidth+"%")
+		      marker.markerWidth = percentageWidth
+	      }
       }
       this._updateTooltipPosition(marker)
     })
