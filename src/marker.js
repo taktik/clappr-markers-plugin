@@ -6,7 +6,8 @@ import EventEmitter from 'event-emitter'
 export default class Marker {
 
   constructor() {
-    this._emitter = new EventEmitter({})
+    this._emitter = new EventEmitter({});
+    this.initAttributes();
   }
 
   /*
@@ -66,5 +67,9 @@ export default class Marker {
    */
   onDestroy() {
     // default to doing nothing
+  }
+
+  initAttributes(){
+      this.videoDuration = 0;
   }
 }

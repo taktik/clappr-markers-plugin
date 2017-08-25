@@ -6,8 +6,13 @@
 </head>
 <body>
   <div id="player"></div>
+  <p></p>
+  <input type="button" id="remove" value="remove marker">
+  <input type="button" id="add" value="add marker">
+  <input type="button" id="btn" value="save">
+  <input type="button" id="clear" value="clear">
   <script>
-
+ var aMarker = new ClapprMarkersPlugin.CropMarker(80,10)
    var player = new Clappr.Player({
     	source: "http://tjenkinson.me/clappr-thumbnails-plugin/assets/video.mp4",
     	parentId: "#player",
@@ -17,12 +22,26 @@
       markersPlugin: {
         markers: [
           new ClapprMarkersPlugin.CropMarker(10,10),
-          new ClapprMarkersPlugin.CropMarker(80,10)
+            aMarker
         ]
       }
     });
 
     var markersPlugin = player.getPlugin('markers-plugin');
+   document.getElementById('btn').onclick = () => {
+       console.log(markersPlugin.getAll());
+   };
+
+   document.getElementById('add').onclick = () => {
+       markersPlugin.addMarker(new ClapprMarkersPlugin.CropMarker(10,10));
+   };
+
+   document.getElementById('remove').onclick = () => {
+       markersPlugin.removeMarker(aMarker);
+   };
+   document.getElementById('clear').onclick = () => {
+       markersPlugin.clearMarkers();
+   };
     /*
     setTimeout(function() {
       markersPlugin.clearMarkers();
