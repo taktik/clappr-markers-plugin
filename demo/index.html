@@ -9,7 +9,7 @@
   <p></p>
   <input type="button" id="remove" value="remove marker">
   <input type="button" id="add" value="add marker">
-  <input type="button" id="btn" value="save">
+  <input type="button" id="save" value="save">
   <input type="button" id="clear" value="clear">
   <script>
  var aMarker = new ClapprMarkersPlugin.CropMarker(80,10)
@@ -28,8 +28,10 @@
     });
 
     var markersPlugin = player.getPlugin('markers-plugin');
-   document.getElementById('btn').onclick = () => {
-       console.log(markersPlugin.getAll());
+   document.getElementById('save').onclick = () => {
+       markersPlugin.getAll().forEach((maker)=>{
+           console.log('Marker - start:', maker.getTime(), ' duration:', maker.getDuration())
+       });
    };
 
    document.getElementById('add').onclick = () => {
@@ -42,11 +44,5 @@
    document.getElementById('clear').onclick = () => {
        markersPlugin.clearMarkers();
    };
-    /*
-    setTimeout(function() {
-      markersPlugin.clearMarkers();
-    }, 500);
-    */
-    // console.log(markersPlugin.getByIndex(1)); 
   </script>
 </body>

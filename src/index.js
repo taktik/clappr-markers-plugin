@@ -191,7 +191,6 @@ export default class MarkersPlugin extends UICorePlugin {
     }
     marker.emitter.on("timeChanged", marker.timeChangedHandler)
     $marker.click((e) => {
-      console.log('$marker.click')
       // when marker clicked seek to the exact time represented by the marker
       this.core.mediaControl.container.seek(marker.time)
       e.preventDefault()
@@ -283,7 +282,6 @@ export default class MarkersPlugin extends UICorePlugin {
       return
     }
     this._markers.forEach((marker) => {
-      console.log("Time:"+marker.time+", duration:"+marker.duration)
         marker.source.render()
 
       this._updateTooltipPosition(marker)

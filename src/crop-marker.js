@@ -22,7 +22,6 @@ export default class CropMarker extends BaseMarker {
    */
 	getDuration () {
         var duration = this._updateDurationValueFromCss();
-		console.log(duration)
 		return duration
 	}
 
@@ -75,7 +74,6 @@ export default class CropMarker extends BaseMarker {
 	 */
     getTime () {
         var time = this._updateTimeFromCss();
-        console.log(time)
         return time
     }
 
@@ -111,7 +109,6 @@ export default class CropMarker extends BaseMarker {
         		'e': '#egrip'
 		    },
 		    resize: ( event, ui ) => {
-		    	console.log('resize')
   				ui.originalElement.css({
   					'left':(''+((1.0*ui.position.left/ui.originalElement.parents('.bar-container').width())*100.0))+'%',
 	  				'width':(''+((1.0*ui.size.width/ui.originalElement.parents('.bar-container').width())*100.0))+'%'
