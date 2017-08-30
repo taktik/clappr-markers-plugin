@@ -53,6 +53,7 @@ export default class MarkersPlugin extends UICorePlugin {
    */
   addMarker(marker) {
     var internalMarker = this._buildInternalMarker(marker)
+      marker.videoDuration =  this._duration;
     this._markers.push(internalMarker)
     this._createMarkerEl(internalMarker)
     this._renderMarkers()
@@ -142,6 +143,7 @@ export default class MarkersPlugin extends UICorePlugin {
 
   // build a marker object for internal use from the provided Marker
   _buildInternalMarker(marker) {
+
     var $tooltip = marker.getTooltipEl()
     if ($tooltip) {
       $tooltip = $($tooltip)
@@ -251,6 +253,9 @@ export default class MarkersPlugin extends UICorePlugin {
 
   _updateDuration() {
     this._duration = this.core.mediaControl.container.getDuration() || null
+    this.getAll().forEach((marker)=>{
+        marker.videoDuration = this._duration
+    });
   }
 
   _onMediaControlContainerChanged() {
@@ -277,22 +282,8 @@ export default class MarkersPlugin extends UICorePlugin {
       return
     }
     this._markers.forEach((marker) => {
-      console.log("Time:"+marker.time+", duration:"+marker.duration)
-      let $el = marker.$marker
-      let percentage = Math.min(Math.max((marker.time/this._duration)*100, 0), 100)
-      if (marker.markerLeft !== percentage) {
-        $el.css("left", percentage+"%")
-        console.log("Left:"+percentage+"%")
-	    marker.markerLeft = percentage
-      }
-      if (marker.duration) {
-	      let percentageWidth = Math.min(Math.max((marker.duration/this._duration)*100, 0), 100 - percentage)
-	      if (marker.markerWidth !== percentageWidth) {
-		      $el.css({"left": percentage+"%", "width":percentageWidth+"%"})
-              console.log("Width:"+percentageWidth+"%")
-		      marker.markerWidth = percentageWidth
-	      }
-      }
+        marker.source.render()
+
       this._updateTooltipPosition(marker)
     })
   }
